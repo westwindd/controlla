@@ -17,24 +17,44 @@
   box-sizing: border-box;
 
 }
+@media (prefers-color-scheme: light) {
+  body {
+    --blue: #060513;
 
-
+    --white: #dbdbdb;
+  
+    --gray: #f5f5f5;
+  
+    --black1: #512691;
+  
+    --black2: #37a021;
+    background-color: var(--blue);
+    color: var(--dark-white);
+  }
+}
 
 :root {
 
-  --blue: #060513;
-
-  --white: #dbdbdb;
-
-  --gray: #f5f5f5;
-
-  --black1: #222;
-
-  --black2: #999;
-
+ 
+ /* Dark Theme Colors */
+ --dark-blue: #656875;
+ --dark-white: #060513;
+ --dark-gray: #000;
+ --dark-black1: #a3bffa;
+ --dark-black2: #69f0ae;
 }
 
-
+/* Toggle Dark Mode */
+.dark-mode {
+ --blue: var(--dark-blue);
+ --white: var(--dark-white);
+ --gray: var(--dark-gray);
+ --black1: var(--dark-black1);
+ --black2: var(--dark-black2);
+ 
+ background-color: var(--dark-blue); /* Optional: change the background of the entire page */
+ color: var(--dark-white); /* Optional: change the default text color */
+}
 
 body {
 
@@ -53,8 +73,133 @@ body {
   width: 100%;
 
 }
+.membership-page h1, .membership-page p {
+  display: grid;
+  padding: 20px; 
+  color: var(--blue); /* Example: Sets the color of all h1 and p tags within .membership-page to blue */
+}
+
+/* =============== Cards Membership ================ */
+.membership-card {
+  --primary-clr: var(--blue);
+  --dot-clr: #BBC0FF;
+  --play: hsl(195, 74%, 62%);
+  width: 300px;
+  height: 170px;
+  border-radius: 10px;
+  
+}
+.membership-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Align items at the top */
+}
+
+.membership-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1; /* Take up available space */
+  gap: 50px; /* Adjust based on your design */
+}
+
+#addMembershipButton .button {
+    width: 260px;
+
+  background-color: var(--play); /* Example color */
+  color: var(--white); /* Text color */
+  width: 200px; /* Same width as the cards for consistency */
+  height: 250px; /* Adjust height as needed */
+  border-radius: 10px; /* Matching the card's border radius */
+  font-size: 16px; /* Text size */
+  border: none; /* Remove border */
+  cursor: pointer; /* Cursor indication for clickable element */
+  display: flex;
+  justify-content: center; /* Center the button text horizontally */
+  align-items: center; /* Center the button text vertically */
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: all .3s ease; /* Smooth transition for interactions */
+}
+
+/* Adjust the hover state for visual feedback */
+#addMembershipButton:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Example shadow for hover effect */
+}
 
 
+.membership-card {
+  font-family: "Arial";
+  color: #fff;
+  display: grid;
+  cursor: pointer;
+  grid-template-rows: 50px 1fr;
+  position: relative;
+  padding: 20px; 
+  display: grid;
+  
+}
+
+.membership-card:hover .membership-img-section {
+  transform: translateY(1em);
+}
+
+.membership-card-desc {
+  border-radius: 10px;
+  padding: 15px;
+  position: relative;
+  top: -10px;
+  display: grid;
+  gap: 10px;
+  background: var(--primary-clr);
+}
+
+.membership-card-time {
+  font-size: 1.7em;
+  font-weight: 500;
+}
+
+.membership-img-section {
+  transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background: hsl(195, 74%, 62%);
+}
+
+.membership-card-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.membership-card-title {
+  flex: 1;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.membership-card-menu {
+  display: flex;
+  gap: 4px;
+  margin-inline: auto;
+}
+
+.membership-card svg {
+  float: right;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.membership-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dot-clr);
+}
+
+.membership-card .membership-recent {
+  line-height: 0;
+  font-size: 0.8em;
+}
 
 /* =============== Navigation ================ */
 
@@ -82,6 +227,7 @@ body {
 
 }
 .chart-container {
+  padding: 20px;
   display: block;
   box-sizing: border-box;
   height: 300px; /* You can adjust the height as needed */
@@ -540,7 +686,6 @@ body {
 
   display: grid;
 
-  grid-template-columns: 2fr 1fr;
 
   grid-gap: 30px;
 
@@ -559,7 +704,7 @@ body {
   min-height: 500px;
 
   background: var(--white);
-
+flex:1;
   padding: 20px;
 
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
@@ -819,11 +964,146 @@ body {
   color: var(--white);
 
 }
+/* ====================== Button add membership ========================== */
+.button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  width: 260px;
+  left: 20px;
+  height: 222px;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 104px;
+  transition: all .15s ease;
+  display: grid;
+}
+
+.button::before,
+.button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: calc(50% - 5px);
+  border: 1px solid #7D8082;
+  transition: all .15s ease;
+}
+
+.button::before {
+  top: 0;
+  border-bottom-width: 0;
+}
+
+.button::after {
+  bottom: 0;
+  border-top-width: 0;
+}
+
+.button:active,
+.button:focus {
+  outline: none;
+}
+
+.button:active::before,
+.button:active::after {
+  right: 3px;
+  left: 3px;
+}
+
+.button:active::before {
+  top: 3px;
+}
+
+.button:active::after {
+  bottom: 3px;
+}
+
+.button_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #0f1923;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.button_lg::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background-color: #0f1923;
+}
+
+.button_lg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  height: 4px;
+  background-color: #0f1923;
+  transition: all .2s ease;
+}
+
+.button_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -28px;
+  width: 0;
+  background-color: #ff4655;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.button_text {
+  position: relative;
+}
+
+.button:hover {
+  color: #0f1923;
+}
+
+.button:hover .button_sl {
+  width: calc(100% + 80px);
+}
+
+.button:hover .button_lg::after {
+  background-color: #fff;
+}
+
 
 
 
 /* ====================== Responsive Design ========================== */
-
+@media (prefers-color-scheme: dark) {
+  body {
+    --blue: var(--dark-blue);
+    --white: var(--dark-white);
+    --gray: var(--dark-gray);
+    --black1: var(--dark-black1);
+    --black2: var(--dark-black2);
+  
+    background-color: var(--dark-gray);
+    color: var(--dark-white);
+  }
+}
 @media (max-width: 991px) {
 
   .navigation {
