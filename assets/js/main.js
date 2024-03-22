@@ -1,10 +1,30 @@
 const updateMainContent = (html) => {
   document.getElementById('main-content').innerHTML = html;
 };
-
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('addMembershipButton').addEventListener('click', () => {
+    document.getElementById('membershipModal').style.display = 'block';
+  });
+});
 const renderMembershipPage = () => {
-
   updateMainContent(`
+    <div id="membershipModal" class="modal" style="display:none;"> <!-- Initially hidden -->
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <form id="membershipForm">
+          <label for="membershipName">Name:</label>
+          <input type="text" id="membershipName" name="membershipName"><br><br>
+          <label for="membershipValue">Value:</label>
+          <input type="text" id="membershipValue" name="membershipValue"><br><br>
+          <label for="membershipImage">Image URL:</label>
+          <input type="text" id="membershipImage" name="membershipImage"><br><br>
+          <input type="submit" value="Submit">
+          <label for="membershipColor">Background Color:</label>
+<input type="color" id="membershipColor" name="membershipColor"><br><br>
+
+        </form>
+      </div>
+    </div>
     <div class="topbar">
     <div class="toggle">
       <ion-icon name="menu-outline"></ion-icon>
@@ -20,57 +40,78 @@ const renderMembershipPage = () => {
     </div>
   </div>
     <div class="membership-page">
-  <h1>Memberships</h1>
-  <p>Here you can manage your memberships.</p>
-  <div class="membership-cards-container" id="membershipCardsContainer">
-    <!-- Membership cards will be dynamically inserted before the button -->
-<button id="addMembershipButton" class="button">
-<span class="button_lg">
-  <span class="button_sl"></span>
-  <span class="button_text">+</span> <!-- Changed text to match functionality -->
-</span>
-</button>
-</div>
-</div>
+    <h1>Memberships</h1>
+    <p>Here you can manage your memberships.</p>
+    <div class="membership-cards-container" id="membershipCardsContainer">
+      <!-- Membership cards will be dynamically inserted before the button -->
+  <button id="addMembershipButton" class="button">
+  <span class="button_lg">
+    <span class="button_sl"></span>
+    <span class="button_text">+</span> <!-- Changed text to match functionality -->
+  </span>
+  </button>
+  </div>
+  `);
 
-    `);
+  document.getElementById('addMembershipButton').addEventListener('click', () => {
+    document.getElementById('membershipModal').style.display = 'block';
+  });
 
-  // Add the initial membership card
-  addMembershipCard();
+  document.querySelector('.close-button').addEventListener('click', () => {
+    document.getElementById('membershipModal').style.display = 'none';
+  });
 
-  // Event listener for the "Add" button
-  document.getElementById('addMembershipButton').addEventListener('click', addMembershipCard);
+  document.getElementById('membershipForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting in the traditional way
+    const color = document.getElementById('membershipColor').value;
+    addMembershipCard({
+      name: document.getElementById('membershipName').value,
+      value: document.getElementById('membershipValue').value,
+      imageUrl: document.getElementById('membershipImage').value,
+      color: color, // Include the background color
+    });
+    document.getElementById('membershipModal').style.display = 'none'; // Hide the modal
+    this.reset(); // Reset form fields for the next input
+  });
 };
 
-const addMembershipCard = () => {
+const addMembershipCard = (membershipData) => {
+  if (!membershipData) return; // If no data is provided, do nothing
+
+  let imageSectionContent;
+
+  // Check if an imageUrl is provided, if not use backgroundColor
+  if (membershipData.imageUrl) {
+    imageSectionContent = `<img src="${membershipData.imageUrl}" alt="Membership" style="width:100%;">`;
+  } else {
+    // Use the provided background color or a default color if none is provided
+    const backgroundColor = membershipData.color || 'hsla(0, 0%, 0%, 0)'; // Example default color: fully transparent
+    imageSectionContent = `<div style="width:100%; border-radius: 10px;height:100px; background-color:${backgroundColor};"></div>`;
+  }
+
   const cardHTML = `
     <div class="membership-card work">
       <div class="membership-img-section">
-      <svg xmlns="http://www.w3.org/2000/svg" height="77" width="76"><path fill-rule="nonzero" fill="#3F9CBB" d="m60.91 71.846 12.314-19.892c3.317-5.36 3.78-13.818-2.31-19.908l-26.36-26.36c-4.457-4.457-12.586-6.843-19.908-2.31L4.753 15.69c-5.4 3.343-6.275 10.854-1.779 15.35a7.773 7.773 0 0 0 7.346 2.035l7.783-1.945a3.947 3.947 0 0 1 3.731 1.033l22.602 22.602c.97.97 1.367 2.4 1.033 3.732l-1.945 7.782a7.775 7.775 0 0 0 2.037 7.349c4.49 4.49 12.003 3.624 15.349-1.782Zm-24.227-46.12-1.891-1.892-1.892 1.892a2.342 2.342 0 0 1-3.312-3.312l1.892-1.892-1.892-1.891a2.342 2.342 0 0 1 3.312-3.312l1.892 1.891 1.891-1.891a2.342 2.342 0 0 1 3.312 3.312l-1.891 1.891 1.891 1.892a2.342 2.342 0 0 1-3.312 3.312Zm14.19 14.19a2.343 2.343 0 1 1 3.315-3.312 2.343 2.343 0 0 1-3.314 3.312Zm0 7.096a2.343 2.343 0 0 1 3.313-3.312 2.343 2.343 0 0 1-3.312 3.312Zm7.096-7.095a2.343 2.343 0 1 1 3.312 0 2.343 2.343 0 0 1-3.312 0Zm0 7.095a2.343 2.343 0 0 1 3.312-3.312 2.343 2.343 0 0 1-3.312 3.312Z"></path></svg>   
+        ${imageSectionContent}  
       </div>
       <div class="membership-card-desc">
         <div class="membership-card-header">
-          <div class="membership-card-title">Play</div>
+          <div class="membership-card-title">${membershipData.name}</div>
           <div class="membership-card-menu">
             <div class="membership-dot"></div>
             <div class="membership-dot"></div>
             <div class="membership-dot"></div>
           </div>
         </div>
-        <div class="membership-card-time">32hrs</div>
-        <p class="membership-recent">Last Week-36hrs</p>
+        <div class="membership-card-time">${membershipData.value}</div>
       </div>
     </div>
   `;
 
-  // Append the new card to the container
-
-  // Select the "Add" button
   const addButton = document.getElementById('addMembershipButton');
-
-  // Insert the new card before the "Add" button
   addButton.insertAdjacentHTML('beforebegin', cardHTML);
 };
+
 
 function renderDashBoard() {
 

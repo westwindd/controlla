@@ -38,7 +38,7 @@
  
  /* Dark Theme Colors */
  --dark-blue: #656875;
- --dark-white: #060513;
+ --dark-white: #262626;
  --dark-gray: #000;
  --dark-black1: #a3bffa;
  --dark-black2: #69f0ae;
@@ -65,7 +65,43 @@ body {
 }
 
 
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+ 
 .container {
 
   position: relative;
@@ -88,6 +124,9 @@ body {
   height: 170px;
   border-radius: 10px;
   
+}
+.membership-card.work{
+  border-radius: 10px;
 }
 .membership-wrapper {
   display: flex;
@@ -162,8 +201,12 @@ body {
   transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background: hsl(195, 74%, 62%);
+  background: hsla(195, 74%, 62%, 0); /* Fully transparent */
 }
+.membershipColor {
+  border-radius: 10px;
+}
+
 
 .membership-card-header {
   display: flex;
@@ -199,6 +242,14 @@ body {
 .membership-card .membership-recent {
   line-height: 0;
   font-size: 0.8em;
+}
+.membership-img-section img {
+  max-width: 100%; /* Ensures the image is no wider than its container */
+  max-height: 100px; /* Adjust based on your design preference */
+  display: block; /* Removes extra space below the image */
+  object-fit: cover; /* Ensures the image covers the area, might crop it */
+  border-top-left-radius: 10px; /* Matches the card's top-left radius */
+  border-top-right-radius: 10px; /* Matches the card's top-right radius */
 }
 
 /* =============== Navigation ================ */
@@ -463,7 +514,7 @@ body {
 
 
 .toggle {
-
+color: #000;
   position: relative;
 
   width: 60px;
