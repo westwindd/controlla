@@ -6,6 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('membershipModal').style.display = 'block';
   });
 });
+const fetchMemberships = async () => {
+  try {
+    const response = await fetch('/api/memberships');
+    const memberships = await response.json();
+    const container = document.getElementById('membershipCardsContainer');
+    container.innerHTML = ''; // Clear the container before adding new content
+    memberships.forEach(membership => {
+      addMembershipCard(membership); // Use your existing function to add each card
+    });
+  } catch (error) {
+    console.error('Error fetching memberships:', error);
+  }
+};
+
 const renderMembershipPage = () => {
   updateMainContent(`
     <div id="membershipModal" class="modal" style="display:none;"> <!-- Initially hidden -->
@@ -75,9 +89,25 @@ const renderMembershipPage = () => {
   });
 };
 
-const addMembershipCard = (membershipData) => {
-  if (!membershipData) return; // If no data is provided, do nothing
+const addMembershipCard = async (membershipData) => {
+  if (!membershipData) return;
 
+  // Post the new membership to the API
+  if (!membershipData._id) { // Assuming that an existing membership has an _id
+    try {
+      await fetch('/api/memberships', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(membershipData),
+      });
+      fetchMemberships(); // Refresh the list after adding
+    } catch (error) {
+      console.error('Error adding membership:', error);
+      return; // Exit if the fetch operation fails
+    }
+  }
   let imageSectionContent;
 
   // Check if an imageUrl is provided, if not use backgroundColor
@@ -344,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Since the content is dynamically loaded, ensure your scripts run after the content is updated
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize the dashboard or any other start-up logic
   renderDashBoard();
+  fetchMemberships(); // Fetch memberships and display them
 
   // Now that content is loaded, you can safely query for elements like '.navigation .brand-name'
   const brandNameElement = document.querySelector('.navigation .brand-name');

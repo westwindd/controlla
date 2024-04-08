@@ -6,7 +6,7 @@ const app: Express = express();
 app.use(express.json()); // Using Express's built-in body parser
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost/yourDatabaseName')
+mongoose.connect('mongodb://localhost/controlla')
 .then(() => console.log('Connected to MongoDB...'))
 .catch(err => console.error('Could not connect to MongoDB...', err));
 
