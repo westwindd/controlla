@@ -8,12 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 const fetchMemberships = async () => {
   try {
-    const response = await fetch('/api/memberships');
+    const response = await fetch('http://localhost:3000/api/memberships');
     const memberships = await response.json();
-    const container = document.getElementById('membershipCardsContainer');
+    console.log(memberships)
+    const container = document.getElementById('membershipContainer'); // Corrected id
     container.innerHTML = ''; // Clear the container before adding new content
     memberships.forEach(membership => {
       addMembershipCard(membership); // Use your existing function to add each card
+      console.log("ENTROU AQUI")
     });
   } catch (error) {
     console.error('Error fetching memberships:', error);
@@ -34,39 +36,39 @@ const renderMembershipPage = () => {
           <input type="text" id="membershipImage" name="membershipImage"><br><br>
           <input type="submit" value="Submit">
           <label for="membershipColor">Background Color:</label>
-<input type="color" id="membershipColor" name="membershipColor"><br><br>
-
+          <input type="color" id="membershipColor" name="membershipColor"><br><br>
         </form>
       </div>
     </div>
     <div class="topbar">
-    <div class="toggle">
-      <ion-icon name="menu-outline"></ion-icon>
+      <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+      </div>
+      <div class="search">
+        <label>
+          <input type="text" placeholder="Search here">
+          <ion-icon name="search-outline"></ion-icon>
+        </label>
+      </div>
+      <div class="user">
+        <img src="assets/imgs/customer01.jpg" alt="">
+      </div>
     </div>
-    <div class="search">
-      <label>
-        <input type="text" placeholder="Search here">
-        <ion-icon name="search-outline"></ion-icon>
-      </label>
-    </div>
-    <div class="user">
-      <img src="assets/imgs/customer01.jpg" alt="">
-    </div>
-  </div>
     <div class="membership-page">
-    <h1>Memberships</h1>
-    <p>Here you can manage your memberships.</p>
-    <div class="membership-cards-container" id="membershipCardsContainer">
-      <!-- Membership cards will be dynamically inserted before the button -->
-  <button id="addMembershipButton" class="button">
-  <span class="button_lg">
-    <span class="button_sl"></span>
-    <span class="button_text">+</span> <!-- Changed text to match functionality -->
-  </span>
-  </button>
-  </div>
+      <h1>Memberships</h1>
+      <p>Here you can manage your memberships.</p>
+      <div class="membership-cards-container" id="membershipContainer">
+        <!-- Membership cards will be dynamically inserted here -->
+      </div>
+      <button id="addMembershipButton" class="add-membership-button"> <!-- Button for adding membership -->
+        <ion-icon name="add"></ion-icon>
+      </button> <!-- End of button for adding membership -->
+    </div>
   `);
 
+  fetchMemberships();
+
+  // Event listeners for modal and form submission
   document.getElementById('addMembershipButton').addEventListener('click', () => {
     document.getElementById('membershipModal').style.display = 'block';
   });
@@ -75,7 +77,7 @@ const renderMembershipPage = () => {
     document.getElementById('membershipModal').style.display = 'none';
   });
 
-  document.getElementById('membershipForm').addEventListener('submit', function(event) {
+  document.getElementById('membershipForm').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the form from submitting in the traditional way
     const color = document.getElementById('membershipColor').value;
     addMembershipCard({
@@ -89,13 +91,14 @@ const renderMembershipPage = () => {
   });
 };
 
+
 const addMembershipCard = async (membershipData) => {
   if (!membershipData) return;
 
   // Post the new membership to the API
   if (!membershipData._id) { // Assuming that an existing membership has an _id
     try {
-      await fetch('/api/memberships', {
+      await fetch('http://localhost:3000/api/memberships', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -138,9 +141,10 @@ const addMembershipCard = async (membershipData) => {
     </div>
   `;
 
-  const addButton = document.getElementById('addMembershipButton');
-  addButton.insertAdjacentHTML('beforebegin', cardHTML);
+  const container = document.getElementById('membershipContainer');
+  container.insertAdjacentHTML('beforeend', cardHTML); // Insert new card at the end of container
 };
+
 
 
 function renderDashBoard() {
@@ -328,19 +332,24 @@ const initializeChart = () => {
   });
 };
 
+  
 const navigationLinks = document.querySelectorAll(".navigation li");
 
 const activeLink = (e) => {
+  const clickedItem = e.currentTarget;
+  
+  const isAlreadyActive = clickedItem.classList.contains("hovered");
+
+  // Remove "hovered" class from all navigation links
   navigationLinks.forEach((item) => item.classList.remove("hovered"));
-  e.currentTarget.classList.add("hovered");
+
+  // If the clicked item was not already active, activate it
+  if (!isAlreadyActive) {
+      clickedItem.classList.add("hovered");
+  }
 };
 
-navigationLinks.forEach((item) => item.addEventListener("mouseover", activeLink));
-window.onload = renderDashBoard()
 
-const toggle = document.querySelector(".toggle");
-const navigation = document.querySelector(".navigation");
-const main = document.querySelector(".main");
 
 // Event delegation for toggle functionality
 document.addEventListener('click', function (event) {
@@ -373,9 +382,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Since the content is dynamically loaded, ensure your scripts run after the content is updated
+
 document.addEventListener('DOMContentLoaded', () => {
   renderDashBoard();
-  fetchMemberships(); // Fetch memberships and display them
+  //fetchMemberships(); // Fetch memberships and display them
 
   // Now that content is loaded, you can safely query for elements like '.navigation .brand-name'
   const brandNameElement = document.querySelector('.navigation .brand-name');

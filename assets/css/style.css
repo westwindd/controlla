@@ -6,54 +6,45 @@
 
 /* =============== Globals ============== */
 
+/* CSS variables and light theme */
 * {
-
   font-family: "Ubuntu", sans-serif;
-
   margin: 0;
-
   padding: 0;
-
   box-sizing: border-box;
-
 }
+
 @media (prefers-color-scheme: light) {
   body {
     --blue: #060513;
-
     --white: #dbdbdb;
-  
     --gray: #f5f5f5;
-  
     --black1: #512691;
-  
     --black2: #37a021;
     background-color: var(--blue);
     color: var(--dark-white);
   }
 }
 
+/* Dark Theme Colors */
 :root {
-
- 
- /* Dark Theme Colors */
- --dark-blue: #656875;
- --dark-white: #262626;
- --dark-gray: #000;
- --dark-black1: #a3bffa;
- --dark-black2: #69f0ae;
+  /* Dark Theme Colors */
+  --dark-blue: #3d3d44; /* Sidebar and titles */
+  --dark-white: #000; /* Background */
+  --dark-gray: #000;
+  --dark-black1: #ffffff; /* Characters and words */
+  --dark-black2: #ffffff; /* Icons */
 }
 
-/* Toggle Dark Mode */
 .dark-mode {
- --blue: var(--dark-blue);
- --white: var(--dark-white);
- --gray: var(--dark-gray);
- --black1: var(--dark-black1);
- --black2: var(--dark-black2);
- 
- background-color: var(--dark-blue); /* Optional: change the background of the entire page */
- color: var(--dark-white); /* Optional: change the default text color */
+  --blue: var(--dark-blue);
+  --white: var(--dark-white);
+  --gray: var(--dark-gray);
+  --black1: var(--dark-black1);
+  --black2: var(--dark-black2);
+  
+  background-color: var(--dark-blue); /* Optional: change the background of the entire page */
+  color: var(--dark-white); /* Optional: change the default text color */
 }
 
 body {
@@ -251,6 +242,27 @@ body {
   border-top-left-radius: 10px; /* Matches the card's top-left radius */
   border-top-right-radius: 10px; /* Matches the card's top-right radius */
 }
+.add-membership-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-membership-button ion-icon {
+  font-size: inherit;
+}
+
 
 /* =============== Navigation ================ */
 
@@ -321,7 +333,6 @@ body {
 
 
 
-.navigation ul li:hover,
 
 .navigation ul li.hovered {
 
@@ -331,13 +342,7 @@ body {
 
 
 
-.navigation ul li:nth-child(1) {
 
-  margin-bottom: 40px;
-
-  pointer-events: none;
-
-}
 
 
 
@@ -357,7 +362,6 @@ body {
 
 }
 
-.navigation ul li:hover a,
 
 .navigation ul li.hovered a {
 
@@ -413,7 +417,6 @@ body {
 
 /* --------- curve outside ---------- */
 
-.navigation ul li:hover a::before,
 
 .navigation ul li.hovered a::before {
 
@@ -439,7 +442,6 @@ body {
 
 }
 
-.navigation ul li:hover a::after,
 
 .navigation ul li.hovered a::after {
 
